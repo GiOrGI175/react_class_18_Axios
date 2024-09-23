@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import api from './api';
 
-const App = () => {
+const App2 = () => {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch('https://jsonplaceholder.typicode.com/users');
+        // const res = await axios.get(
+        //   'https://jsonplaceholder.typicode.com/users'
+        // );
 
-        const data = await res.json();
+        // console.log(res);
 
-        setUsers(data);
+        const res = await api.get('/users');
 
-        // console.log(data);
-
-        if (!res.ok) throw new Error('Networkin res was not ok');
+        setUsers(res.data);
       } catch (error) {
         console.error(`This is my error: ${error}`);
       }
@@ -30,17 +32,11 @@ const App = () => {
     console.log(id);
 
     try {
-      const res = await fetch(
+      const res = await axios.get(
         `https://jsonplaceholder.typicode.com/users/${id}`
       );
 
-      const data = await res.json();
-
-      setUser(data);
-
-      // console.log(data);
-
-      if (!res.ok) throw new Error('Networkin res was not ok');
+      setUser(res.data);
     } catch (error) {
       console.error(`This is my error: ${error}`);
     }
@@ -82,4 +78,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default App2;
